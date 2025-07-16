@@ -10,3 +10,6 @@ client/nginx.conf
 
 # Python virtual environment
 .venv/
+
+# Ignore the gitignore file itself
+.gitignore
