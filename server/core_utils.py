@@ -6,7 +6,7 @@ import os
 import websockets
 import traceback
 from websockets.exceptions import ConnectionClosed
-
+from dotenv import load_dotenv
 # Set up logging
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
@@ -14,12 +14,14 @@ stream_logger = logging.getLogger(__name__)
 
 
 # Constants
-PROJECT_ID = "alpha-code-461805"
-LOCATION = "us-central1"
-MODEL = "gemini-2.5-flash-preview-native-audio-dialog"
-VOICE_NAME = "Puck"
+load_dotenv()
+
+PROJECT_ID = os.environ.get("PROJECT_ID")
+LOCATION = os.environ.get("LOCATION")
+MODEL = os.environ.get("MODEL")
+VOICE_NAME = os.environ.get("VOICE_NAME")
 GOOGLE_GENAI_USE_VERTEXAI = "FALSE"
-GOOGLE_API_KEY = "AIzaSyABN6jVIQAETXfxBmy3jHlGXyngWM9kbS4"
+
 
 # Audio sample rates for input/output
 RECEIVE_SAMPLE_RATE = 24000  # Rate of audio received from Gemini
@@ -50,7 +52,8 @@ class BaseStreamServer:
         self.active_connections = {}  # Store client connections
 
     async def start_server(self):
-        stream_logger.info(f"Starting stream server on {self.host}:{self.port}")
+        stream_logger.info(
+            f"Starting stream server on {self.host}:{self.port}")
         async with websockets.serve(self.manage_connection, self.host, self.port):
             await asyncio.Future()  # Run forever
 
@@ -68,7 +71,8 @@ class BaseStreamServer:
         except ConnectionClosed:
             stream_logger.info(f"Connection closed: {connection_id}")
         except Exception as e:
-            stream_logger.error(f"Error handling connection {connection_id}: {e}")
+            stream_logger.error(
+                f"Error handling connection {connection_id}: {e}")
             stream_logger.error(traceback.format_exc())
         finally:
             # Clean up
