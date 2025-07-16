@@ -36,11 +36,36 @@ This project implements a real-time, multimodal voice assistant using the Google
 
 ### 1. Set Up Environment Variables
 
-Create a `.env` file in the `server/` directory and add your Google Maps API key:
+Create a `.env` file in the `server/` directory to configure the application. This file stores sensitive keys and project-specific settings.
 
+**File Location:** `server/.env`
+
+**Sample `.env` file:**
 ```
-GOOGLE_MAPS_API_KEY="YOUR_API_KEY_HERE"
+# Google Cloud Project Details
+PROJECT_ID="your-gcp-project-id"
+LOCATION="your-gcp-project-location"
+
+# Google ADK Configuration
+MODEL="gemini-2.5-flash-preview-native-audio-dialog"
+VOICE_NAME="Puck"
+
+# API Keys
+GOOGLE_GENAI_USE_VERTEXAI="FALSE"
+GOOGLE_API_KEY="your-google-api-key"
+GOOGLE_MAPS_API_KEY="your-google-maps-api-key"
 ```
+
+**Variable Descriptions:**
+- `PROJECT_ID`: Your Google Cloud Platform project ID.
+- `LOCATION`: The GCP region where your project is hosted (e.g., `us-central1`).
+- `MODEL`: The Gemini model to be used for the voice assistant.
+- `VOICE_NAME`: The pre-built voice for the assistant's responses.
+- `GOOGLE_GENAI_USE_VERTEXAI`: Set to `"TRUE"` to use Vertex AI, or `"FALSE"` to use the standard Google AI platform.
+- `GOOGLE_API_KEY`: Your Google API key for authentication.
+- `GOOGLE_MAPS_API_KEY`: Your Google Maps API key for location-based services.
+
+Replace the placeholder values with your actual project details and API keys.
 
 ### 2. Install Dependencies
 
